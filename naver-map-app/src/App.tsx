@@ -1,27 +1,35 @@
-import React from 'react';
-import Header from './components/Header';
+import React, { useState } from 'react';
 import MenuButtons from './components/MenuButtons';
-import FoodTypeSelector from './components/FoodTypeSelector';
+import NaverMap from './components/NaverMap';
+import Header from './components/Header';
 import RestaurantList from './components/RestaurantList';
-import NaverMapWithSearch from './components/NaverMapWithSearch';
+import {fetchWheelchairStations} from "./components/WheelchairStationFetcher";
 
 const App: React.FC = () => {
-  // 휠체어 충전소 데이터를 가져오는 함수 (MenuButtons에서 사용할 수 있음)
-  const fetchWheelchairStations = () => {
-    // 휠체어 충전소 API를 호출하는 기능을 여기에 추가할 수 있습니다.
-    // NaverMapWithSearch 컴포넌트에서 추가하는 방법에 따라 조정 가능합니다.
-    console.log('휠체어 충전소 데이터 가져오기');
+  const [mapInstance, setMapInstance] = useState<naver.maps.Map | null>(null);
+  const [markers, setMarkers] = useState<naver.maps.Marker[]>([]);
+  const [selectedMenu, setSelectedMenu] = useState<string>(''); // 메뉴 상태 관리
+
+  const handleFetchWheelchairStations = () => {
+    console.log('Map Instance:', mapInstance);
+    if (mapInstance) {
+      // mapInstance와 setMarkers를 인자로 전달
+      fetchWheelchairStations(mapInstance, setMarkers);
+    }
+  };
+
+  const handleMenuClick = (menu: string) => {
+    setSelectedMenu(menu); // 선택된 메뉴 업데이트
   };
 
   return (
     <div className="App">
       <Header />
-      {/* MenuButtons에서 휠체어 충전소 데이터를 가져오는 기능을 전달 */}
-      <MenuButtons onFetchWheelchairStations={fetchWheelchairStations} />
-      {/* NaverMapWithSearch 컴포넌트에서 지도와 검색을 렌더링 */}
-      <NaverMapWithSearch />
-      <FoodTypeSelector />
-      <RestaurantList />
+      <MenuButtons onFetchWheelchairStations={handleFetchWheelchairStations} onMenuClick={handleMenuClick} />
+      <NaverMap setMapInstance={setMapInstance} /> {/* setMapInstance 추가 */}
+
+      {/* '식당' 메뉴가 선택된 경우에만 RestaurantList 표시 */}
+      {selectedMenu === '식당' && <RestaurantList />}
     </div>
   );
 };
