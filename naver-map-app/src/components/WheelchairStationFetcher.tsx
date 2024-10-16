@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { parseStringPromise } from 'xml2js';
 
+let idleListener: naver.maps.MapEventListener | null = null; // 리스너 참조 저장
+
 export const fetchWheelchairStations = async (
     map: naver.maps.Map,
     setMarkers: (markers: naver.maps.Marker[]) => void
@@ -48,23 +50,32 @@ export const fetchWheelchairStations = async (
         title: markerTitle,
       });
 
+      console.log('Marker created:', marker); // 마커 생성 확인
+
       return marker;
     });
 
     // 마커 업데이트
     setMarkers(newMarkers);
+    console.log('Markers set:', newMarkers); // 마커 설정 확인
 
     // 지도 중심을 첫 번째 충전소로 설정
     if (newMarkers.length > 0) {
       map.setCenter(newMarkers[0].getPosition());
       map.setZoom(13);
+      console.log('Map center set to:', newMarkers[0].getPosition()); // 지도 중심 설정 확인
     }
 
     // 보이는 영역에 있는 마커만 표시
     updateMarkersInView(map, newMarkers);
 
+    // 기존의 'idle' 이벤트 리스너 제거
+    if (idleListener) {
+      naver.maps.Event.removeListener(idleListener);
+    }
+
     // 'idle' 이벤트가 발생할 때 보이는 범위 내 마커 업데이트
-    naver.maps.Event.addListener(map, 'idle', function () {
+    idleListener = naver.maps.Event.addListener(map, 'idle', function () {
       updateMarkersInView(map, newMarkers);
     });
 
@@ -73,6 +84,14 @@ export const fetchWheelchairStations = async (
     if (Response) {
       console.log('Error Response:', Response);  // 에러 응답 상세 확인
     }
+  }
+};
+
+// 'idle' 이벤트 리스너 제거 함수
+export const removeIdleListener = () => {
+  if (idleListener) {
+    naver.maps.Event.removeListener(idleListener);
+    idleListener = null;
   }
 };
 
