@@ -3,9 +3,8 @@ const webpack = require('webpack');
 module.exports = {
   resolve: {
     fallback: {
-      buffer: require.resolve('buffer/'),
-      stream: require.resolve('stream-browserify'),
-      timers: require.resolve('timers-browserify'),
+      stream: require.resolve('stream-browserify'), // stream Polyfill 추가
+      buffer: require.resolve('buffer/'), // buffer Polyfill 추가
     },
   },
   plugins: [

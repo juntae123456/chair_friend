@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { parseStringPromise } from 'xml2js';
+import CustomMapMarker from './CustomMapMarker'; // CustomMapMarker import
 
 let idleListener: naver.maps.MapEventListener | null = null; // 리스너 참조 저장
 
@@ -8,7 +9,7 @@ export const fetchWheelchairStations = async (
     setMarkers: (markers: naver.maps.Marker[]) => void
 ) => {
   try {
-    const API_KEY = 'gPtkOvEliK1AvYI39wzlWkUK%2Bp%2Bvy8FLmAoLG%2FoSZDmGCCYEtwNAzfM14q9nsV8Y2NoPl4GiVI8aY69JUBxQ2A%3D%3D';
+    const API_KEY = process.env.REACT_APP_CHAIR_API_KEY;
     const BASE_URL = `https://apis.data.go.kr/6260000/BusanDischrgStusService/getTblDischrgStusInfo?serviceKey=${API_KEY}`;
 
     const firstPageResponse = await axios.get(BASE_URL + '&pageNo=1&numOfRows=10');
@@ -48,6 +49,11 @@ export const fetchWheelchairStations = async (
       const marker = new naver.maps.Marker({
         position: position,
         title: markerTitle,
+        icon: {
+          content: CustomMapMarker({ title: markerTitle, windowWidth: window.innerWidth }), // CustomMapMarker 사용
+          size: new naver.maps.Size(38, 58),
+          anchor: new naver.maps.Point(19, 58)
+        }
       });
 
       console.log('Marker created:', marker); // 마커 생성 확인

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, Theme } from '@mui/material';
 
 interface NaverMapProps {
   setMapInstance: (map: naver.maps.Map | null) => void;
@@ -9,10 +9,14 @@ interface NaverMapProps {
 const NaverMap: React.FC<NaverMapProps> = ({ setMapInstance, center }) => {
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const mapElement = useRef<HTMLDivElement | null>(null);
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+
+  // 네이버 지도 API 로드 확인
+  const isNaverMapsLoaded = () => typeof naver !== 'undefined' && typeof naver.maps !== 'undefined';
 
   // 지도 초기화
   useEffect(() => {
-    if (mapElement.current) {
+    if (mapElement.current && isNaverMapsLoaded()) {
       const mapOptions = {
         center: new naver.maps.LatLng(37.5665, 126.9780), // 초기 서울 시청 위치
         zoom: 13,
@@ -39,11 +43,11 @@ const NaverMap: React.FC<NaverMapProps> = ({ setMapInstance, center }) => {
     <Box sx={{ 
       width: '100%', 
       height: '100%', 
-      maxWidth: '1600px', // 최대 너비를 1600px로 설정
-      maxHeight: '900px', 
+      maxWidth: isMobile ? '100%' : '1500px', // 데스크탑 환경에서 지도의 최대 너비 설정
+      maxHeight: isMobile ? '100%' : '800px', // 데스크탑 환경에서 지도의 최대 높이 설정
       margin: 'auto', 
       overflow: 'hidden',
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' // 그림자 효과 추가
+      boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)' // 그림자 진하게 조정
     }}>
       <div ref={mapElement} style={{ width: '100%', height: '100%' }} />
     </Box>

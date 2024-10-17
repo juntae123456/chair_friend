@@ -52,13 +52,13 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedMenu, onMenuClick, map, setMa
       display: 'flex', 
       flexDirection: 'column', 
       paddingTop: 2,
-      boxShadow: '8px 0 10px rgba(0, 0, 0, 0.1)'
+      boxShadow: '12px 0 30px rgba(0, 0, 0, 0.3)' // 그림자 진하게 조정
     }}>
-      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 2 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 0 }}>
         <img src="https://ifh.cc/g/jNXXqF.png" alt="Logo" style={{ width: 60, marginLeft: 20 }} />
         <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/979edae1dcf047805473693709d5064ae442a83396d11c2b21bbeb368056a7e7" alt="Logo name" style={{ width: 150, marginRight: 5 }} />
       </Box>
-      <Divider sx={{ backgroundColor: 'white', marginBottom: 2 }} />
+      <Divider sx={{ backgroundColor: 'black', marginBottom: 1, width: '80%', alignSelf: 'center' }} /> {/* 구분선 색상 및 길이 조정 */}
 
       {menuItems.map((item) => (
         <Button
@@ -79,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedMenu, onMenuClick, map, setMa
             },
             padding: '10px 15px',
             borderRadius: '50px',
-            margin: '5px 15px',
+            margin: '10px 15px', // 버튼 간의 간격을 늘림
             transition: 'all 0.3s ease',
             position: 'relative',
             overflow: 'hidden',
