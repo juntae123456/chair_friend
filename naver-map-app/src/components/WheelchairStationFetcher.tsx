@@ -10,7 +10,7 @@ export const fetchWheelchairStations = async (
 ) => {
   try {
     const API_KEY = process.env.REACT_APP_CHAIR_API_KEY;
-    const BASE_URL = `https://apis.data.go.kr/6260000/BusanDischrgStusService/getTblDischrgStusInfo?serviceKey=${API_KEY}`;
+    const BASE_URL = `http://api.data.go.kr/openapi/tn_pubr_public_electr_whlchairhgh_spdchrgr_api?serviceKey=${API_KEY}`;
 
     const firstPageResponse = await axios.get(BASE_URL + '&pageNo=1&numOfRows=10');
     console.log('First Page Response:', firstPageResponse.data);
@@ -40,11 +40,11 @@ export const fetchWheelchairStations = async (
 
     // 새 마커 생성
     const newMarkers = allStations.map((station: any) => {
-      const lat = parseFloat(station.lat[0]);
-      const lng = parseFloat(station.lng[0]);
+      const lat = parseFloat(station.latitude[0]);
+      const lng = parseFloat(station.longitude[0]);
       const position = new naver.maps.LatLng(lat, lng);
 
-      const markerTitle = `${station.loc[0]} - ${station.detailLoc[0]}`;
+      const markerTitle = `${station.fcltyNm[0]}-${station.instlLcDesc[0]}`;
 
       const marker = new naver.maps.Marker({
         position: position,

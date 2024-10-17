@@ -15,8 +15,20 @@ const HeaderAndMap: React.FC<HeaderAndMapProps> = ({ setMapInstance }) => {
 
   const handleSearch = () => {
     if (searchQuery.trim() !== '') {
-      // Geocoding logic here
-      setSearchQuery(''); // 검색 후 검색창 초기화
+      // 네이버 지도 API의 지오코딩 서비스를 사용하여 주소를 좌표로 변환
+      naver.maps.Service.geocode({ query: searchQuery }, function(status, response) {
+        if (status === naver.maps.Service.Status.ERROR) {
+          return alert('검색 중 오류가 발생했습니다.');
+        }
+        if (response.v2.meta.totalCount > 0) {
+          const item = response.v2.addresses[0];
+          const point = new naver.maps.Point(Number(item.x), Number(item.y));
+          setMapCenter({ lat: point.y, lng: point.x });
+          setSearchQuery(''); // 검색 성공 후 검색창 초기화
+        } else {
+          alert('검색 결과가 없습니다.');
+        }
+      });
     }
   };
 
@@ -70,7 +82,7 @@ const HeaderAndMap: React.FC<HeaderAndMapProps> = ({ setMapInstance }) => {
                   backgroundColor: '#939191',
                   borderRadius: '50px',
                   width: '270px',
-                  height: '40px',
+                  height: '50px',
                 }
               }}
               sx={{
