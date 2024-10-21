@@ -36,8 +36,8 @@ https://developers.naver.com/products/login/api/api.md
 
 |충전소|홈|
 |:---:|:---:|
-|<img src="https://github.com/user-attachments/assets/450930bd-d467-4051-bd84-f22085c1ef84" width="400"/>|<img src="https://github.com/user-attachments/assets/ad070fbf-1f92-4c13-b0bc-c9aba6fb9c13" width="400"/>|
+|<video src="https://github.com/user-attachments/assets/450930bd-d467-4051-bd84-f22085c1ef84" width="400"/>|<video src="https://github.com/user-attachments/assets/ad070fbf-1f92-4c13-b0bc-c9aba6fb9c13" width="400"/>|
 
 |로그인 로그아웃|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/2acd26b2-af9c-412a-9d25-df51e355cf00" width="400"/>|
+|<video src="https://github.com/user-attachments/assets/2acd26b2-af9c-412a-9d25-df51e355cf00" width="400"/>|
