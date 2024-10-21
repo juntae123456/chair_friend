@@ -23,4 +23,12 @@ Activity Recognition Transition API 를 활용한 간단한 테스트 앱입니�
 
 https://developer.android.com/develop/sensors-and-location/location/transitions?hl=ko
 
-## 사용 예시
+### 화면 구성
+
+|충전소|홈|
+|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/25bfe028-3575-415c-97a6-8bedcaae8f49" width="400"/>|<img src="https://github.com/user-attachments/assets/32a24a37-010a-451b-a338-c172be145fa1" width="400"/>|
+
+|로그인 로그아웃|
+|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/776a07c6-3c8c-40d5-b539-0ebf1ec2d6e4" width="400"/>|
